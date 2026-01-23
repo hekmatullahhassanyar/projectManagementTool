@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Main {
-    static void main(String[] args) {
+    static void main() {
         // ✅ Step 1: Connect to Supabase
         PostgresDatabase database = new PostgresDatabase();
         try (Connection conn = database.connect()) {
