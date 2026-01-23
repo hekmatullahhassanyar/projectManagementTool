@@ -35,33 +35,35 @@ public class Main {
         SubmissionService submissionService = new SubmissionService(new SubmissionRepositoryImpl(database));
 
         // ✅ Step 3: Demo inserts
-        Student s1 = new Student(1, "Alice", "alice@example.com");
-        studentService.addStudent(s1);
-        System.out.println("✅ Added student: " + s1.getName());
 
-        Course c1 = new Course(101, "Software Engineering");
+        Student s2 = new Student(3, "jalal", "jalal200@gmail.com");
+        studentService.addStudent(s2);
+        System.out.println("✅ Added student: " + s2.getName());
+
+        Course c1 = new Course(103, "IT");
+
         courseService.addCourse(c1);
         System.out.println("✅ Added course: " + c1.getName());
 
-        Task t1 = new Task(1001, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
+        Task t1 = new Task(1003, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
         taskService.addTask(t1);
         System.out.println("✅ Added task: " + t1.getTitle());
 
-        Submission sub1 = new Submission(5001, s1.getId(), t1.getId(), LocalDateTime.now());
+        Submission sub1 = new Submission(5003, s2.getId(), t1.getId(), LocalDateTime.now());
         submissionService.addSubmission(sub1);
-        System.out.println("✅ Added submission for student " + s1.getName());
+        System.out.println("✅ Added submission for student " + s2.getName());
 
         // ✅ Step 4: Retrieve by ID
-        Student foundStudent = studentService.getStudent(1);
+        Student foundStudent = studentService.getStudent(3);
         System.out.println("🔍 Found student: " + foundStudent.getName() + " (" + foundStudent.getEmail() + ")");
 
-        Course foundCourse = courseService.getCourse(101);
+        Course foundCourse = courseService.getCourse(103);
         System.out.println("🔍 Found course: " + foundCourse.getName());
 
-        Task foundTask = taskService.getTask(1001);
+        Task foundTask = taskService.getTask(1003);
         System.out.println("🔍 Found task: " + foundTask.getTitle() + " due " + foundTask.getDueDate());
 
-        Submission foundSubmission = submissionService.getSubmission(5001);
+        Submission foundSubmission = submissionService.getSubmission(5003);
         System.out.println("🔍 Found submission: studentId=" + foundSubmission.getStudentId() +
                 ", taskId=" + foundSubmission.getTaskId() +
                 ", submittedAt=" + foundSubmission.getSubmittedAt());
