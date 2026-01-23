@@ -36,34 +36,34 @@ public class Main {
 
         // ✅ Step 3: Demo inserts
 
-        Student s2 = new Student(3, "jalal", "jalal200@gmail.com");
+        Student s2 = new Student(4, "Azamat", "on.jagalau@gmail.com");
         studentService.addStudent(s2);
         System.out.println("✅ Added student: " + s2.getName());
 
-        Course c1 = new Course(103, "IT");
+        Course c1 = new Course(104, "Computer science");
 
         courseService.addCourse(c1);
         System.out.println("✅ Added course: " + c1.getName());
 
-        Task t1 = new Task(1003, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
+        Task t1 = new Task(1004, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
         taskService.addTask(t1);
         System.out.println("✅ Added task: " + t1.getTitle());
 
-        Submission sub1 = new Submission(5003, s2.getId(), t1.getId(), LocalDateTime.now());
+        Submission sub1 = new Submission(5004, s2.getId(), t1.getId(), LocalDateTime.now());
         submissionService.addSubmission(sub1);
         System.out.println("✅ Added submission for student " + s2.getName());
 
         // ✅ Step 4: Retrieve by ID
-        Student foundStudent = studentService.getStudent(3);
+        Student foundStudent = studentService.getStudent(4);
         System.out.println("🔍 Found student: " + foundStudent.getName() + " (" + foundStudent.getEmail() + ")");
 
-        Course foundCourse = courseService.getCourse(103);
+        Course foundCourse = courseService.getCourse(104);
         System.out.println("🔍 Found course: " + foundCourse.getName());
 
-        Task foundTask = taskService.getTask(1003);
+        Task foundTask = taskService.getTask(1004);
         System.out.println("🔍 Found task: " + foundTask.getTitle() + " due " + foundTask.getDueDate());
 
-        Submission foundSubmission = submissionService.getSubmission(5003);
+        Submission foundSubmission = submissionService.getSubmission(5004);
         System.out.println("🔍 Found submission: studentId=" + foundSubmission.getStudentId() +
                 ", taskId=" + foundSubmission.getTaskId() +
                 ", submittedAt=" + foundSubmission.getSubmittedAt());
