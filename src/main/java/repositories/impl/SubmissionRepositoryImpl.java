@@ -2,6 +2,7 @@ package com.studentmanagement.repositories.impl;
 
 import com.studentmanagement.database.IDatabase;
 import com.studentmanagement.entities.Submission;
+import com.studentmanagement.exceptions.NotFoundException;
 import com.studentmanagement.repositories.SubmissionRepository;
 
 import java.sql.*;
@@ -45,7 +46,7 @@ public class SubmissionRepositoryImpl implements SubmissionRepository {
                         rs.getTimestamp("submitted_at").toLocalDateTime()
                 );
             }
-            return null;
+            throw new NotFoundException("Submission with id " + id + " not found");
         } catch (SQLException e) {
             throw new RuntimeException("Error finding submission", e);
         }

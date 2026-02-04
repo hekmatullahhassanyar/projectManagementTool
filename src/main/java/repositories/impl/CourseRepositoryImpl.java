@@ -2,6 +2,7 @@ package com.studentmanagement.repositories.impl;
 
 import com.studentmanagement.database.IDatabase;
 import com.studentmanagement.entities.Course;
+import com.studentmanagement.exceptions.NotFoundException;
 import com.studentmanagement.repositories.CourseRepository;
 
 import java.sql.*;
@@ -38,7 +39,7 @@ public class CourseRepositoryImpl implements CourseRepository {
             if (rs.next()) {
                 return new Course(rs.getInt("id"), rs.getString("name"));
             }
-            return null; // or throw NotFoundException if you prefer
+            throw new NotFoundException("Course with id " + id + " not found");
         } catch (SQLException e) {
             throw new RuntimeException("Error finding course", e);
         }
