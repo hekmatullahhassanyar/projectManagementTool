@@ -1,8 +1,9 @@
 package com.studentmanagement.services;
 
 import com.studentmanagement.entities.Task;
+import com.studentmanagement.filters.TaskFilter;
 import com.studentmanagement.repositories.TaskRepository;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskService {
@@ -23,4 +24,28 @@ public class TaskService {
     public List<Task> listTasks() {
         return repository.findAll();
     }
+
+    public List<Task> filterTasks(TaskFilter<Task> filter) {
+
+        List<Task> result = new ArrayList<>();
+
+        for (Task task : repository.findAll()) {
+            if (filter.filter(task)) {
+                result.add(task);
+            }
+        }
+
+        return result;
+    }
+
+    public List<Task> getOverdueTasks() {
+        List<Task> result = new ArrayList<>();
+        for (Task task : repository.findAll()) {
+            if (task.getDueDate().isBefore(java.time.LocalDate.now())) {
+                result.add(task);
+            }
+        }
+        return result;
+    }
+
 }

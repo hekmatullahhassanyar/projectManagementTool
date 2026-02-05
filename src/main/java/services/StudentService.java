@@ -2,6 +2,8 @@ package com.studentmanagement.services;
 
 import com.studentmanagement.entities.Student;
 import com.studentmanagement.repositories.StudentRepository;
+import com.studentmanagement.notifications.NotificationCenter;
+
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ public class StudentService {
 
     public void addStudent(Student student) {
         repository.save(student);
+        NotificationCenter.getInstance().notifyUser("Student added: " + student.getName());
+
     }
 
     public Student getStudent(int id) {
