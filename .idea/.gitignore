@@ -2,4 +2,12 @@ config.properties
 .idea/workspace.xml
 .idea/
 out/
+# IntelliJ IDEA
+.idea/
+out/
+*.iml
+
+# But keep shared project settings if you want (optional)
+!.idea/runConfigurations/
+!.idea/codeStyles/
 
