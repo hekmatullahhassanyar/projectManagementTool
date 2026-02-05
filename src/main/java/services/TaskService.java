@@ -2,8 +2,12 @@ package com.studentmanagement.services;
 
 import com.studentmanagement.entities.Task;
 import com.studentmanagement.filters.TaskFilter;
+import com.studentmanagement.exceptions.InvalidInputException;
+import com.studentmanagement.exceptions.NotFoundException;
 import com.studentmanagement.repositories.TaskRepository;
 import java.util.ArrayList;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public class TaskService {
@@ -14,6 +18,9 @@ public class TaskService {
     }
 
     public void addTask(Task task) {
+        if (task.getDueDate().isBefore(LocalDate.now())) {
+            throw new InvalidInputException("Deadline cannot be in the past");
+        }
         repository.save(task);
     }
 

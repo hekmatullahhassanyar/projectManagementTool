@@ -3,38 +3,36 @@ package com.studentmanagement.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
-import java.io.InputStream;
-import java.io.IOException;
 
 public class PostgresDatabase implements IDatabase {
-    private final String url = "jdbc:postgresql://aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres?sslmode=require";
-    private final String user = "postgres.fuguftfekrakhufbmucy";
+
+    private String url;
+    private String user;
     private String password;
 
     public PostgresDatabase() {
-        loadPassword();
-    }
+        // Load credentials from VM options
+        this.url = System.getProperty("DB_URL");
+        this.user = System.getProperty("DB_USER");
+        this.password = System.getProperty("DB_PASSWORD");
 
-    private void loadPassword() {
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
-            if (input == null) {
-                throw new RuntimeException("Unable to find config.properties");
-            }
-            Properties prop = new Properties();
-            prop.load(input);
-            password = prop.getProperty("db.password");
-        } catch (IOException ex) {
-            throw new RuntimeException("Failed to load database password", ex);
+        if (url == null || user == null || password == null ||
+                url.isEmpty() || user.isEmpty() || password.isEmpty()) {
+            throw new RuntimeException("❌ Missing DB_URL, DB_USER, or DB_PASSWORD from VM options");
+        }
+
+        System.out.println("✅ Loaded DB credentials from VM options");
+
+        // Optional: ensure PostgreSQL driver is loaded
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("❌ PostgreSQL JDBC Driver not found. Add it to your dependencies!", e);
         }
     }
 
     @Override
-    public Connection connect() {
-        try {
-            return DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            throw new RuntimeException("Database connection failed!", e);
-        }
+    public Connection connect() throws SQLException {
+        return DriverManager.getConnection(url, user, password);
     }
 }

@@ -1,6 +1,8 @@
 package com.studentmanagement.services;
 
 import com.studentmanagement.entities.Student;
+import com.studentmanagement.exceptions.InvalidInputException;
+import com.studentmanagement.exceptions.NotFoundException;
 import com.studentmanagement.repositories.StudentRepository;
 import com.studentmanagement.notifications.NotificationCenter;
 
@@ -15,13 +17,21 @@ public class StudentService {
     }
 
     public void addStudent(Student student) {
+        if (student.getName() == null || student.getName().isEmpty() ||
+                student.getEmail() == null || student.getEmail().isEmpty()) {
+            throw new InvalidInputException("Student name and email cannot be empty");
+        }
         repository.save(student);
         NotificationCenter.getInstance().notifyUser("Student added: " + student.getName());
 
     }
 
     public Student getStudent(int id) {
-        return repository.findById(id);
+        Student student = repository.findById(id);
+        if (student == null) {
+            throw new NotFoundException("Student not found");
+        }
+        return student;
     }
 
     public List<Student> listStudents() {
