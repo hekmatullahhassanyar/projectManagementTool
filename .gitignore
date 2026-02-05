@@ -1,0 +1,7 @@
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# optional local config
+config.properties

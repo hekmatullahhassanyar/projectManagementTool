@@ -55,4 +55,20 @@ public class TaskService {
         return result;
     }
 
+    public void changeTaskStatus(int id, String newStatus) {
+        Task task = repository.findById(id);
+
+        if (task == null) {
+            throw new NotFoundException("Task not found with id: " + id);
+        }
+
+        if (newStatus == null || newStatus.isBlank()) {
+            throw new InvalidInputException("Status cannot be empty");
+        }
+
+        task.changeStatus(newStatus);   // ВАЖНО: Task должен иметь setStatus(String)
+        repository.save(task);       // если save обновляет существующую задачу
+    }
+
+
 }

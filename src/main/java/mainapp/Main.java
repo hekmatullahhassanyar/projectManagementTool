@@ -1,4 +1,4 @@
-package com.studentmanagement.Main;
+package com.studentmanagement.mainapp;
 import com.studentmanagement.database.PostgresDatabase;
 import com.studentmanagement.entities.Student;
 import com.studentmanagement.entities.Course;
@@ -44,34 +44,34 @@ public class Main {
 
         // ✅ Step 3: Demo inserts
 
-        Student s2 = new Student(8, "ehsan", "ehsan676@gmail.com");
+        Student s2 = new Student(5003, "ehsan", "ehsan6610@gmail.com");
         studentService.addStudent(s2);
         System.out.println("✅ Added student: " + s2.getName());
 
-        Course c1 = new Course(108, "cyber security");
+        Course c1 = new Course(6003, "cyber security");
 
         courseService.addCourse(c1);
         System.out.println("✅ Added course: " + c1.getName());
 
-        Task t1 = new Task(1008, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
+        Task t1 = new Task(7003, "Project Report", "Write final project report", LocalDate.of(2026, 2, 15));
         taskService.addTask(t1);
         System.out.println("✅ Added task: " + t1.getTitle());
 
-        Submission sub1 = new Submission(5008, s2.getId(), t1.getId(), LocalDateTime.now());
+        Submission sub1 = new Submission(8003, s2.getId(), t1.getId(), LocalDateTime.now());
         submissionService.addSubmission(sub1);
         System.out.println("✅ Added submission for student " + s2.getName());
 
         // ✅ Step 4: Retrieve by ID
-        Student foundStudent = studentService.getStudent(8);
+        Student foundStudent = studentService.getStudent(5003);
         System.out.println("🔍 Found student: " + foundStudent.getName() + " (" + foundStudent.getEmail() + ")");
 
-        Course foundCourse = courseService.getCourse(108);
+        Course foundCourse = courseService.getCourse(6003);
         System.out.println("🔍 Found course: " + foundCourse.getName());
 
-        Task foundTask = taskService.getTask(1008);
+        Task foundTask = taskService.getTask(7003);
         System.out.println("🔍 Found task: " + foundTask.getTitle() + " due " + foundTask.getDueDate());
 
-        Submission foundSubmission = submissionService.getSubmission(5008);
+        Submission foundSubmission = submissionService.getSubmission(8003);
         System.out.println("🔍 Found submission: studentId=" + foundSubmission.getStudentId() +
                 ", taskId=" + foundSubmission.getTaskId() +
                 ", submittedAt=" + foundSubmission.getSubmittedAt());
@@ -116,7 +116,7 @@ public class Main {
 
         Task bugTask = TaskFactory.createTask(
                 TaskType.BUG,
-                9999,
+                10001,
                 "Login crash",
                 "Fix NullPointerException on login",
                 LocalDate.now().plusDays(3)

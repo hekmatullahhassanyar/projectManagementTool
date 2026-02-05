@@ -1,13 +1,10 @@
-config.properties
-.idea/workspace.xml
+# IntelliJ
 .idea/
-out/
-# IntelliJ IDEA
-.idea/
-out/
 *.iml
 
-# But keep shared project settings if you want (optional)
-!.idea/runConfigurations/
-!.idea/codeStyles/
+# Build output
+out/
+*.class
 
+# Local config / secrets
+config.properties

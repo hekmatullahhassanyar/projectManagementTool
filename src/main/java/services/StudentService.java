@@ -21,7 +21,7 @@ public class StudentService {
                 student.getEmail() == null || student.getEmail().isEmpty()) {
             throw new InvalidInputException("Student name and email cannot be empty");
         }
-        repository.save(student);
+        repository.addStudent(student);
         NotificationCenter.getInstance().notifyUser("Student added: " + student.getName());
 
     }
