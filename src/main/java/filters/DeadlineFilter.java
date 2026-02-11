@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class DeadlineFilter implements TaskFilter<Task> {
 
-    private LocalDate date;
+    private final LocalDate date;
 
     public DeadlineFilter(LocalDate date) {
         this.date = date;
