@@ -32,4 +32,15 @@ public class Task {
         }
         this.status = newStatus;
     }
+
+    // For loading from DB (no validation)
+    public Task(int id, String title, String description, LocalDate dueDate, String status) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.status = status;
+    }
+
+
 }

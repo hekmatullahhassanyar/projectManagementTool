@@ -1,7 +1,13 @@
 # IntelliJ
 .idea/
 *.iml
-out/
 
-# optional local config
-config.properties
+# Build folders
+out/
+target/
+
+# Compiled files
+*.class
+
+# Logs
+*.log

@@ -19,7 +19,17 @@ public class TaskRepositoryImpl implements TaskRepository {
 
     @Override
     public void save(Task task) {
-        String sql = "INSERT INTO tasks(id, title, description, due_date, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = """
+    INSERT INTO tasks(id, title, description, due_date, status)
+    VALUES (?, ?, ?, ?, ?)
+    ON CONFLICT (id)
+    DO UPDATE SET
+        title = EXCLUDED.title,
+        description = EXCLUDED.description,
+        due_date = EXCLUDED.due_date,
+        status = EXCLUDED.status
+""";
+
         try (Connection conn = database.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, task.getId());
@@ -41,14 +51,14 @@ public class TaskRepositoryImpl implements TaskRepository {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                Task task = new Task(
+                return new Task(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getDate("due_date").toLocalDate()
+                        rs.getDate("due_date").toLocalDate(),
+                        rs.getString("status")
                 );
-                task.changeStatus(rs.getString("status"));
-                return task;
+
             }
             throw new NotFoundException("Task with id " + id + " not found");
         } catch (SQLException e) {
@@ -64,14 +74,14 @@ public class TaskRepositoryImpl implements TaskRepository {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Task task = new Task(
+                tasks.add(new Task(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("description"),
-                        rs.getDate("due_date").toLocalDate()
-                );
-                task.changeStatus(rs.getString("status"));
-                tasks.add(task);
+                        rs.getDate("due_date").toLocalDate(),
+                        rs.getString("status")
+                ));
+
             }
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving tasks", e);
